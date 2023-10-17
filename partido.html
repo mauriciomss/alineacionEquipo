@@ -19,25 +19,7 @@
             document.getElementById("hms").innerHTML="00:00:00";
 
             // ***************************************************
-
-            const Jugadores = [
-                {name: "Carmen",numero: "1"},
-                {name: "Laura",numero: "2"},
-                {name: "Zio",numero: "3"},
-                {name: "Manu",numero: "4"},
-                {name: "Ani",numero: "6"},
-                {name: "Sandra",numero: "7"},
-                {name: "Pame",numero: "8"},
-                {name: "Ale",numero: "10"},
-                {name: "Romi",numero: "11"},
-                {name: "Ester",numero: "13"},
-                {name: "Roxana",numero: "14"},
-                {name: "Luz",numero: "15"},
-            ];
-
-            //for (let i = 0; i < Jugadores.length; i++) { console.log(Jugadores[i].name); }
-            //console.log(Jugadores);
-        }         
+        }
 
         function cronometrar(){
            escribir();
@@ -105,13 +87,7 @@
     		<div class="jugador5-gol gol" data=""></div>
             <div class="jugador5-cambio cambio" data=""></div>
 
-    		<div class="suplentes" data="suplentes">
-    			<div class="suplente nombre" data="Laura"></div>
-    			<div class="suplente nombre" data="Zio"></div>
-    			<div class="suplente nombre" data="Romi"></div>
-    			<div class="suplente nombre" data="Sandra"></div>
-                <div class="suplente nombre" data="Flor"></div>
-    			<div class="suplente nombre" data="Ester"></div>
+    		<div id="suplentes" class="suplentes" data="suplentes">
     		</div>
     	</div>
         <!-- The Modal -->
@@ -127,6 +103,69 @@
 </body>
 
 <script type="text/javascript">
+    const Jugadores = [
+        {name: "Carmen",numero: "1"},
+        {name: "Laura",numero: "2"},
+        {name: "Zio",numero: "3"},
+        {name: "Manu",numero: "4"},
+        {name: "Ani",numero: "6"},
+        {name: "Sandra",numero: "7"},
+        {name: "Pame",numero: "8"},
+        {name: "Ale",numero: "10"},
+        {name: "Romi",numero: "11"},
+        {name: "Ester",numero: "13"},
+        {name: "Roxana",numero: "14"},
+        {name: "Luz",numero: "15"},
+    ];
+    //for (let i = 0; i < Jugadores.length; i++) { console.log(Jugadores[i].name); }
+    //console.log(Jugadores);
+        
+
+    const titulares = [];
+    const suplentes = [];
+    const logCambios = [];
+    const logGoles = [];
+
+    //const ulTitulares = document.getElementById('titulares');
+    const divSuplentes = document.getElementById('suplentes');
+
+//var div1 = document.getElementsByClassName("div1");
+
+    // Al iniciar todos son suplentes
+    for (let i = 0; i < Jugadores.length; i++) {
+        suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero } );
+        //    
+        /*
+        ulSuplentes.append(
+            Object.assign(document.createElement('li'), 
+            { textContent: Jugadores[i].name, id: Jugadores[i].numero })
+        );
+        */
+
+        //document.body.innerHTML += "<div class='suplente nombre' data='Laura'></div>"
+        //document.getElementsByClassName("div2")[0].appendChild(div1[0]);
+
+
+        var newDiv = document.createElement("div");
+        newDiv.data = "span";
+        newDiv.class = "span";
+
+        //var respuesta = document.getElementById("respuestas");
+        //divSuplentes.appendChild(newDiv);
+
+
+        //divSuplentes.innerHTML = '<div id="div1"><h1>Titulo</h1><p>Texto</p></div>';
+
+        divSuplentes.appendChild( '<div id="div1"><h1>Titulo</h1><p>Texto</p></div>' );
+
+        //document.getElementById('span').innerHTML = 'El registre ha sido borrado.';
+
+    }
+
+
+
+
+
 
 let golesOtros = document.getElementById('golesOtros');
 parent.addEventListener('dblclick', function() {
