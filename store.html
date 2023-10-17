@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Store</title>
+	<link rel="shortcut icon" href="#">
+
+	<script type="text/javascript">
+
+    window.onbeforeunload = function() {
+        return "Tem a certeza que quer sair da pagina?";
+    }
+
+		const Jugadores = [
+			{
+				name: "Carmen",
+				numero: "1",
+			},
+			{
+				name: "Laura",
+				numero: "2",
+			},
+			{
+				name: "Zio",
+				numero: "3",
+			},
+			{
+				name: "Manu",
+				numero: "4",
+			},			
+			{
+				name: "Ani",
+				numero: "6",
+			},
+			{
+				name: "Sandra",
+				numero: "7",
+			},			
+			{
+				name: "Pame",
+				numero: "8",
+			},
+			{
+				name: "Ale",
+				numero: "10",
+			},			
+			{
+				name: "Romi",
+				numero: "11",
+			},
+			{
+				name: "Ester",
+				numero: "13",
+			},
+			{
+				name: "Roxana",
+				numero: "14",
+			},
+			{
+				name: "Luz",
+				numero: "15",
+			},
+		];
+
+		for (let i = 0; i < Jugadores.length; i++) {
+			//console.log(Jugadores[i].name);
+		}
+
+		console.log(Jugadores);
+
+	</script>
+
+</head>
+<body>
+
+<div style="border: 1px solid; width: 30%;">
+	<ul id="titulares">
+	</ul>	
+</div>
+<div style="border: 1px solid; width: 30%;">
+	<ul id="suplentes">
+	</ul>	
+</div>
+
+<button>Add item</button>
+
+
+<button id="descargar">Descargar TXT</button>
+
+</body>
+
+<script type="text/javascript">
+
+	const titulares = [];
+	const suplentes = [];
+	const logCambios = [];
+	const logGoles = [];
+
+	const ulTitulares = document.getElementById('titulares');
+	const ulSuplentes = document.getElementById('suplentes');
+
+	// Al iniciar todos son suplentes
+	if ( titulares.length == 0 && suplentes.length == 0 ) {
+		for (let i = 0; i < Jugadores.length; i++) {
+
+			//
+			suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero } );
+		
+			ulSuplentes.append(
+				Object.assign(document.createElement('li'), 
+		    	{ textContent: Jugadores[i].name, id: Jugadores[i].numero })
+		    );
+
+	    }
+
+	}
+
+	function cambioJugadores(sale, entra){
+
+		//saco de titulares 
+		const idxObjT = titulares.findIndex(object => {
+			if (object.numero == sale)
+		  		return object.numero;
+		});
+		titulares.splice(idxObjT, 1);
+
+		//saco de suplentes		
+		const idxObjS = suplentes.findIndex(object => {
+			if (object.numero == entra)
+		  		return object.numero;
+		});
+		suplentes.splice(idxObjS, 1);
+
+		// Agrego el jugador a titulares
+		for (let i = 0; i < Jugadores.length; i++) {
+			if (sale == Jugadores[i].numero) {
+				suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero } );
+				//log
+				// registro cambio y tiempo
+				logCambios.push( { tipo: "s", name: Jugadores[i].name, numero: Jugadores[i].numero, tiempo: '1', minuto: '11:00:01' } );
+			}
+			if (entra == Jugadores[i].numero) {
+				titulares.push( { name: Jugadores[i].name, numero: Jugadores[i].numero } );
+				//log
+				// registro cambio y tiempo
+				logCambios.push( { tipo: "e", name: Jugadores[i].name, numero: Jugadores[i].numero, tiempo: '1', minuto: '11:00:01' } );
+			}
+		}
+
+		console.log(logCambios);
+
+	}
+
+
+	console.log("############################");
+
+	//
+
+	
+	document.querySelector('button').addEventListener('click', e => {
+
+		cambioJugadores('', 14);
+
+		ulTitulares.innerHTML = '';
+		ulSuplentes.innerHTML = '';
+
+		//ul.append(Object.assign(document.createElement('li'), 
+	    //{textContent: 'Four', id: 'element4'}));
+
+		for (let i = 0; i < titulares.length; i++) {
+			ulTitulares.append(
+				Object.assign(document.createElement('li'), 
+		    	{ textContent: titulares[i].name, id: titulares[i].numero })
+		    );
+	    }
+		for (let i = 0; i < suplentes.length; i++) {
+			ulSuplentes.append(
+				Object.assign(document.createElement('li'), 
+		    	{ textContent: suplentes[i].name, id: suplentes[i].numero })
+		    );
+	    }
+
+	});
+
+
+
+	const guardarArchivoDeTexto = (contenido, nombre) => {
+        const a = document.createElement("a");
+        const archivo = new Blob([contenido], { type: 'text/plain' });
+        const url = URL.createObjectURL(archivo);
+        a.href = url;
+        a.download = nombre;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+    const $botonDescargar = document.querySelector("#descargar");
+    $botonDescargar.onclick = () => {
+
+		let txt = "";
+
+		for (let i = 0; i < Jugadores.length; i++) {
+			//txt = txt+ Jugadores[i].name + "\n";
+	    }
+
+	    txt = txt + "logCambios\n";
+	    txt = txt + JSON.stringify(logCambios) + "\n";
+	    txt = txt + "logGoles\n";
+	    txt = txt + JSON.stringify(logGoles) + "\n";
+
+        guardarArchivoDeTexto(txt, "archivo.txt");
+    }
+
+
+
+
+	//suplentes.filter(function(o) { return o.numero != 10 }); // filtramos
+
+
+	/*
+	var miObjeto = { 'marcado': 'html5', 'estilo': 'css3', 'comportamiento': 'js' };
+	// Guardo el objeto como un string
+	localStorage.setItem('datos', JSON.stringify(miObjeto));
+
+	// Obtengo el string previamente salvado y luego
+	var guardado = localStorage.getItem('datos');
+	//console.log('objetoObtenido: ', JSON.parse(guardado));
+	*/
+</script>
+
+
+</html>
