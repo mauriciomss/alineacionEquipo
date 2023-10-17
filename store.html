@@ -85,8 +85,11 @@
 
 <button>Add item</button>
 
-
 <button id="descargar">Descargar TXT</button>
+
+<br><br><br>
+
+<button id="store">Store</button>
 
 </body>
 
@@ -148,16 +151,15 @@
 			}
 		}
 
-		console.log(logCambios);
-
+		//console.log(logCambios);
+		localStorage.setItem('datos', JSON.stringify(logCambios));
+		
 	}
-
 
 	console.log("############################");
 
 	//
 
-	
 	document.querySelector('button').addEventListener('click', e => {
 
 		cambioJugadores('', 14);
@@ -213,19 +215,26 @@
 
 
 
-
+    /*
 	//suplentes.filter(function(o) { return o.numero != 10 }); // filtramos
 
-
-	/*
-	var miObjeto = { 'marcado': 'html5', 'estilo': 'css3', 'comportamiento': 'js' };
+	//var miObjeto = { 'marcado': 'html5', 'estilo': 'css3', 'comportamiento': 'js' };
 	// Guardo el objeto como un string
-	localStorage.setItem('datos', JSON.stringify(miObjeto));
+	localStorage.setItem('datos', "");
 
 	// Obtengo el string previamente salvado y luego
-	var guardado = localStorage.getItem('datos');
+	//var guardado = localStorage.getItem('datos');
 	//console.log('objetoObtenido: ', JSON.parse(guardado));
-	*/
+
+    const $btnStore = document.querySelector("#store");
+    $btnStore.onclick = () => {
+    	var guardado = localStorage.getItem('datos');
+    	if (guardado) {
+			console.log('objetoObtenido: ', JSON.parse(guardado));
+		}
+    }
+    */
+
 </script>
 
 

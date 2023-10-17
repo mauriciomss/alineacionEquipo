@@ -5,398 +5,70 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Equipo</title>
 	<link rel="shortcut icon" href="#">
+    <link href="assets/style.css" rel="stylesheet">
 
-<script language="JavaScript">
-   window.onload = init;
-   function init(){
-       document.querySelector(".start").addEventListener("click",cronometrar);
-       document.querySelector(".stop").addEventListener("click",parar);
-       document.querySelector(".reiniciar").addEventListener("click",reiniciar);
-       h = 0;
-       m = 0;
-       s = 0;
-       document.getElementById("hms").innerHTML="00:00:00";
+    <script language="JavaScript">
+       window.onload = init;
+       function init(){
+            document.querySelector(".start").addEventListener("click",cronometrar);
+            document.querySelector(".stop").addEventListener("click",parar);
+            document.querySelector(".reiniciar").addEventListener("click",reiniciar);
+            h = 0;
+            m = 0;
+            s = 0;
+            document.getElementById("hms").innerHTML="00:00:00";
 
-       // ***************************************************
+            // ***************************************************
 
-       //document.querySelector(".gol").addEventListener("click",jugadorGol);
-       //document.querySelector(".cambio").addEventListener("click",jugadorCambio);
-   }         
+            const Jugadores = [
+                {name: "Carmen",numero: "1"},
+                {name: "Laura",numero: "2"},
+                {name: "Zio",numero: "3"},
+                {name: "Manu",numero: "4"},
+                {name: "Ani",numero: "6"},
+                {name: "Sandra",numero: "7"},
+                {name: "Pame",numero: "8"},
+                {name: "Ale",numero: "10"},
+                {name: "Romi",numero: "11"},
+                {name: "Ester",numero: "13"},
+                {name: "Roxana",numero: "14"},
+                {name: "Luz",numero: "15"},
+            ];
 
-   function jugadorGol(){
-       alert("jugadorGol");
-   }
+            //for (let i = 0; i < Jugadores.length; i++) { console.log(Jugadores[i].name); }
+            //console.log(Jugadores);
+        }         
 
-   function jugadorCambio(){
-       alert("jugadorCambio");
-   }
-
-   function cronometrar(){
-       escribir();
-       id = setInterval(escribir,1000);
-       document.querySelector(".start").removeEventListener("click",cronometrar);
-   }
-   function escribir(){
-       var hAux, mAux, sAux;
-       s++;
-       if (s>59){m++;s=0;}
-       if (m>59){h++;m=0;}
-       if (h>24){h=0;}
-
-       if (s<10){sAux="0"+s;}else{sAux=s;}
-       if (m<10){mAux="0"+m;}else{mAux=m;}
-       if (h<10){hAux="0"+h;}else{hAux=h;}
-
-       document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux; 
-   }
-   function parar(){
-       clearInterval(id);
-       document.querySelector(".start").addEventListener("click",cronometrar);
-   }
-   function reiniciar(){
-       clearInterval(id);
-       document.getElementById("hms").innerHTML="00:00:00";
-       h=0;m=0;s=0;
-       document.querySelector(".start").addEventListener("click",cronometrar);
-   }
-</script>
-
-<style type="text/css">
-
-    *{
-        box-sizing:border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    html {
-        position: relative;
-        min-height: 100%;
-      }
-      
-    body {
-        font-family: 'Lucida Sans Unicode', Verdana, sans-serif;
-        font-size: 14px;
-
-        background-image: url(bg-green-grass.jpg);
-        background-position: center;
-        background-size: 100%;
-
-    }
-      
-    a {
-          text-decoration: none;
-          color: #0085cf;
-    }
-
-    @font-face{
-        font-family:alarm;
-        src:url(alarm.ttf);
-        font-style:normal;
-        font-weight:400;
-    }
-
-    .cuerpo {
-        width: 360px;
-        position: relative;
-    }
-
-    .cronometro{
-       width:100%;
-       top:0.5%;
-       position:absolute;
-       text-align:center;
-       z-index: 99999;
-    } 
-    .boton{display:inline-block;width:32px;height:32px;position:relative;}
-    #hms{
-       font-size:35px;
-       color:#000;
-       font-family:alarm;
-    }
-    .start{background:url(start.png) 0 0 no-repeat;}
-    .stop{background:url(pause.png) 0 0 no-repeat;}
-    .reiniciar{background:url(delete.png)0 0 no-repeat;}   
-
-    .campo {
-        display: flex;
-        justify-content: start;
-        position: relative;
-        width: 100%;
-        min-height: 700px;
-        background-image: url(fondo.jpg);
-        background-size: 100%;
-        background-repeat: no-repeat;
-    }
-
-    .golesMFA {
-        position: absolute;
-        border: 5px solid #000;
-        width: 65px;
-        height: 50px;
-        top: 1%;
-        left: 3%;
-        background-color: #fff;
-        font-family: alarm;
-        font-size: 40px;
-        text-align: center;
-    }
-
-    .golesOtros {
-        position: absolute;
-        border: 5px solid #000;
-        width: 65px;
-        height: 50px;
-        top: 1%;
-        left: 79%;
-        background-color: #fff;
-        font-family: alarm;
-        font-size: 40px;
-        text-align: center;
-    }
-
-    .jugador1 {
-        position: absolute;
-        border: 2px solid #FF0080;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        top: 41%;
-        left: 43%;
-        background-image: url(jugadora.jpg);
-        background-size: 100%;    
-    }
-        .jugador1-gol {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            top: 42%;
-            left: 58%;
-            background-image: url(pelota.jpg);
-            background-size: 100%;    
+        function cronometrar(){
+           escribir();
+           id = setInterval(escribir,1000);
+           document.querySelector(".start").removeEventListener("click",cronometrar);
         }
-        .jugador1-cambio {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            top: 46%;
-            left: 58%;
-            background-image: url(cambio.jpg);
-            background-size: 100%;    
-        }    
+        function escribir(){
+           var hAux, mAux, sAux;
+           s++;
+           if (s>59){m++;s=0;}
+           if (m>59){h++;m=0;}
+           if (h>24){h=0;}
 
-    .jugador2 {
-        position: absolute;
-        border: 2px solid #FF0080;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        top: 31%;
-        left: 43%;
-        background-image: url(jugadora.jpg);
-        background-size: 100%;    
-    }
-        .jugador2-gol {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            top: 31%;
-            left: 58%;
-            background-image: url(pelota.jpg);
-            background-size: 100%;    
+           if (s<10){sAux="0"+s;}else{sAux=s;}
+           if (m<10){mAux="0"+m;}else{mAux=m;}
+           if (h<10){hAux="0"+h;}else{hAux=h;}
+
+           document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux; 
         }
-        .jugador2-cambio {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            top: 35%;
-            left: 58%;
-            background-image: url(cambio.jpg);
-            background-size: 100%;    
-        }    
-
-    .jugador3 {
-        position: absolute;
-        border: 2px solid #FF0080;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        top: 24%;
-        left: 12%;
-        background-image: url(jugadora.jpg);
-        background-size: 100%;    
-    }
-        .jugador3-gol {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            top: 25%;
-            left: 27%;
-            background-image: url(pelota.jpg);
-            background-size: 100%;    
+        function parar(){
+           clearInterval(id);
+           document.querySelector(".start").addEventListener("click",cronometrar);
         }
-        .jugador3-cambio {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            top: 29%;
-            left: 27%;
-            background-image: url(cambio.jpg);
-            background-size: 100%;    
-        }    
-
-    .jugador4 {
-        position: absolute;
-        border: 2px solid #FF0080;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        top: 24%;
-        left: 71%;
-        background-image: url(jugadora.jpg);
-        background-size: 100%;    
-    }
-        .jugador4-gol {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            top: 25%;
-            left: 86%;
-            background-image: url(pelota.jpg);
-            background-size: 100%;    
+        function reiniciar(){
+           clearInterval(id);
+           document.getElementById("hms").innerHTML="00:00:00";
+           h=0;m=0;s=0;
+           document.querySelector(".start").addEventListener("click",cronometrar);
         }
-        .jugador4-cambio {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            top: 29%;
-            left: 86%;
-            background-image: url(cambio.jpg);
-            background-size: 100%;    
-        }    
+    </script>
 
-    .jugador5 {
-        position: absolute;
-        border: 2px solid #FF0080;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        top: 17%;
-        left: 43%;
-        background-image: url(jugadora.jpg);
-        background-size: 100%;    
-    }
-        .jugador5-gol {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            top: 18%;
-            left: 58%;
-            background-image: url(pelota.jpg);
-            background-size: 100%;    
-        }
-        .jugador5-cambio {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            top: 22%;
-            left: 58%;
-            background-image: url(cambio.jpg);
-            background-size: 100%;    
-        }
-
-    .nombre:before { 
-        content: attr(data); 
-        position: absolute;
-        top: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: white;
-        padding: 0px 10px; 
-        margin: 0;
-    }
-
-    .suplentes {
-        position: absolute;
-        border: 4px solid #FF0080;
-        top: 52%;
-        padding: 7px;
-    }
-    .suplentes:before { 
-        content: attr(data); 
-        position: absolute;
-        top: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #FF0080;
-        color: #ffffff;
-        padding: 0px 10px; 
-        margin: 0;
-    }
-        
-        .suplente {
-            display: inline-block;
-            position: relative;
-            border: 2px solid #FF0080;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-image: url(jugadora.jpg);
-            background-size: 100%;
-            margin: 15px;
-        }
-
-
-    /* The Modal (background) */
-    .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
-      padding-top: 100px; /* Location of the box */
-      left: 0;
-      top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-
-    /* Modal Content */
-    .modal-content {
-      background-color: #fefefe;
-      margin: auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-    }
-
-    /* The Close Button */
-    .close {
-      color: #aaaaaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    
-	</style>
 </head>
 <body>
 
@@ -410,36 +82,36 @@
 
     	<div class="campo">
     		
-    		<div class="golesMFA">00</div>
-            <div class="golesOtros">00</div>
+    		<div id="golesMFA" class="golesMFA">00</div>
+            <div id="golesOtros" class="golesOtros">00</div>
 
-            <div class="jugador1 nombre" data="Carmen" style="background-image: url(jugadores/carmen.jpg);"></div>
-            <div class="jugador1-gol gol" data="Carmen"></div>
-            <div class="jugador1-cambio cambio" data="Carmen"></div>
+            <div class="jugador1 nombre" data=""></div>
+            <div class="jugador1-gol gol" data=""></div>
+            <div class="jugador1-cambio cambio" data=""></div>
 
-            <div class="jugador2 nombre" data="Ale" style="background-image: url(jugadores/ale.jpg);"></div>
-            <div class="jugador2-gol gol" data="Ale"></div>
-            <div class="jugador2-cambio cambio" data="Ale"></div>
+            <div class="jugador2 nombre" data=""></div>
+            <div class="jugador2-gol gol" data=""></div>
+            <div class="jugador2-cambio cambio" data=""></div>
 
-    		<div class="jugador3 nombre" data="Manu" style="background-image: url(jugadores/manu.jpg);"></div>
-            <div class="jugador3-gol gol" data="Sandra"></div>
-            <div class="jugador3-cambio cambio" data="Sandra"></div>		
+    		<div class="jugador3 nombre" data=""></div>
+            <div class="jugador3-gol gol" data=""></div>
+            <div class="jugador3-cambio cambio" data=""></div>		
 
-            <div class="jugador4 nombre" data="Ani" style="background-image: url(jugadores/ani.jpg);"></div>
-            <div class="jugador4-gol gol" data="Flor"></div>
-            <div class="jugador4-cambio cambio" data="Flor"></div>
+            <div class="jugador4 nombre" data=""></div>
+            <div class="jugador4-gol gol" data=""></div>
+            <div class="jugador4-cambio cambio" data=""></div>
 
-    		<div class="jugador5 nombre" data="Pame" style="background-image: url(jugadores/pame.jpg);"></div>
-    		<div class="jugador5-gol gol" data="Pame"></div>
-            <div class="jugador5-cambio cambio" data="Pame"></div>
+    		<div class="jugador5 nombre" data=""></div>
+    		<div class="jugador5-gol gol" data=""></div>
+            <div class="jugador5-cambio cambio" data=""></div>
 
-    		<div class="suplentes" data="SUPLENTES">
-    			<div class="suplente nombre" data="Laura" style="background-image: url(jugadores/laura.jpg);"></div>
-    			<div class="suplente nombre" data="Zio" style="background-image: url(jugadores/zio.jpg);"></div>
-    			<div class="suplente nombre" data="Romi" style="background-image: url(jugadores/romi.jpg);"></div>
-    			<div class="suplente nombre" data="Sandra" style="background-image: url(jugadores/sandra.jpg);"></div>
-                <div class="suplente nombre" data="Flor" style="background-image: url(jugadores/flor.jpg);"></div>
-    			<div class="suplente nombre" data="Ester" style="background-image: url(jugadores/ester.jpg);"></div>
+    		<div class="suplentes" data="suplentes">
+    			<div class="suplente nombre" data="Laura"></div>
+    			<div class="suplente nombre" data="Zio"></div>
+    			<div class="suplente nombre" data="Romi"></div>
+    			<div class="suplente nombre" data="Sandra"></div>
+                <div class="suplente nombre" data="Flor"></div>
+    			<div class="suplente nombre" data="Ester"></div>
     		</div>
     	</div>
         <!-- The Modal -->
@@ -455,28 +127,37 @@
 </body>
 
 <script type="text/javascript">
-/*
-document.body.addEventListener('click', function (evt) {
-    if (evt.target.className === 'gol') {
-        alert("goll")
-    }
-}, false)
-*/
+
+let golesOtros = document.getElementById('golesOtros');
+parent.addEventListener('dblclick', function() {
+    //console.log('Doble Click');
+    var el = document.getElementById("golesOtros");
+    let goles = parseInt( el.innerHTML );
+    el.innerHTML = goles + 1;
+});
 
 document.addEventListener('click', function handleClick(event) {
     //console.log('user clicked: ', event.target);
 
+    // ###############################################################
     if (event.target.classList[1] === 'gol') {
-        console.log( event.target.attributes.data.value );
+        //console.log( event.target.attributes.data.value );
         //modal.style.display = "block";
-        console.log("gol de " + event.target.attributes.data.value);
+        //console.log("gol de " + event.target.attributes.data.value);
+
+        var el = document.getElementById("golesMFA");
+        let goles = parseInt( el.innerHTML );
+        el.innerHTML = goles + 1;
+        //console.log( goles +1 );
     }
 
+    // ###############################################################
     if (event.target.classList[1] === 'cambio') {
         console.log( event.target.attributes.data.value );
         modal.style.display = "block";
     }
 
+    // ###############################################################
     if (event.target.className === 'close') {
         modal.style.display = "none";
     }
