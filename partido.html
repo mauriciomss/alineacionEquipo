@@ -54,7 +54,7 @@
 </head>
 <body>
 
-    <div class="cuerpo">   
+    <div id="partido" class="cuerpo">   
         <div class="cronometro">
            <div id="hms"></div>
            <div class="boton start"></div>        
@@ -101,9 +101,27 @@
 
         </div>        
     </div>
+
+    <div id="listJugadores">
+    </div>
+
+    <div id="listGoles"></div>
+
+    <div class="botones">
+        <button id="btnListJugadores">COMBOCADOS</button>
+        <button id="btnPartido">PARTIDO</button>
+        <button id="btnListGoles">GOLES</button>
+    </div>
+
 </body>
 
 <script type="text/javascript">
+
+    // Vistas
+    const listJugadores = document.getElementById("listJugadores");
+    const listGoles = document.getElementById("listGoles"); 
+    const partido = document.getElementById("partido"); 
+
     const Jugadores = [
         {name: "Carmen",numero: "12",imagen: "carmen.jpg"},
         {name: "Laura",numero: "2",imagen: "laura.jpg"},
@@ -132,6 +150,9 @@
 
     const divSuplentes = document.getElementById('suplentes');
 
+    // Get the modal
+    var modal = document.getElementById("myModal");    
+
     // Al iniciar todos son suplentes
     for (let i = 0; i < Jugadores.length; i++) {
         suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero, imagen: Jugadores[i].imagen } );
@@ -140,7 +161,20 @@
     recargarSuplentes();
 
     function recargarSuplentes() {
+        
+        suplentes.sort(function (a, b){
+            return ( a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+        });
+
         divSuplentes.innerHTML = "";
+        //
+        document.getElementById("mySelect").innerHTML= "";
+        var x = document.getElementById("mySelect");
+        var option = document.createElement("option");
+        option.setAttribute('value', "0");
+        option.text = "Seleccione...";
+        x.add(option);
+
         for (let i = 0; i < suplentes.length; i++) {
             // ✅ Create element
             const el = document.createElement('div');
@@ -153,7 +187,6 @@
             divSuplentes.appendChild(el);
             //
             // Carga select de cambio
-            var x = document.getElementById("mySelect");
             var option = document.createElement("option");
             option.setAttribute('value', suplentes[i].numero);
             option.text = suplentes[i].name;
@@ -183,13 +216,13 @@
         // Agrego el jugador a titulares
         for (let i = 0; i < Jugadores.length; i++) {
             if (sale == Jugadores[i].numero) {
-                suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero } );
+                suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero, imagen: Jugadores[i].imagen } );
                 //log
                 // registro cambio y tiempo
                 logCambios.push( { tipo: "s", name: Jugadores[i].name, numero: Jugadores[i].numero, tiempo: tiempo, hms: hms } );
             }
             if (entra == Jugadores[i].numero) {
-                titulares.push( { name: Jugadores[i].name, numero: Jugadores[i].numero } );
+                titulares.push( { name: Jugadores[i].name, numero: Jugadores[i].numero, imagen: Jugadores[i].imagen } );
                 //log
                 // registro cambio y tiempo
                 logCambios.push( { tipo: "e", name: Jugadores[i].name, numero: Jugadores[i].numero, tiempo: tiempo, hms: hms } );
@@ -205,8 +238,36 @@
     }
     
     function cambioJugadores(chosen) {
-        console.log(chosen);
-        console.log(posicionJugador);
+        let jugadorEntra = chosen;
+        //console.log(jugadorEntra);
+        
+        //objeto jugador
+        const jugadorN = document.getElementById(posicionJugador);
+        
+        let jugadorSale = jugadorN.getAttribute("dataid");
+
+        if ( jugadorSale ) {
+            console.log( jugadorSale );
+        }
+
+        //busco jugador entra
+        const jugador = Jugadores.filter(function(o) { return o.numero == jugadorEntra });
+        //console.log(jugador);
+        
+
+        //asigna al objeto los datos del q entra
+        jugadorN.setAttribute('dataid', jugador[0].numero);
+        jugadorN.setAttribute('data', jugador[0].name);
+        jugadorN.style.backgroundImage = "url('jugadores/"+jugador[0].imagen+"')";
+        
+        //asigno el numero al objeto gol
+        document.getElementById(posicionJugador+"-gol").setAttribute('dataid', jugador[0].numero);
+        //asigno el numero al objeto cambio
+        document.getElementById(posicionJugador+"-cambio").setAttribute('dataid', jugador[0].numero);
+
+        cambioJugadoresArray(jugadorSale, jugadorEntra);
+
+        modal.style.display = "none";
     }
 
 
@@ -245,33 +306,6 @@
             posicionJugador = event.target.id.replace("-cambio","");
 
             modal.style.display = "block";
-
-            /*
-            //objeto jugador
-            const jugadorN = document.getElementById(posicionJugador);
-            
-            let jugadorSale = jugadorN.getAttribute("dataid");
-
-            if ( jugadorSale ) {
-                console.log( jugadorSale );
-
-            }
-
-            //busco jugador entra
-            let jugadorEntra = 10;
-            const jugador = Jugadores.filter(function(o) { return o.numero == jugadorEntra });
-            //asigna al objeto los datos del q entra
-            jugadorN.setAttribute('dataid', jugador[0].numero);
-            jugadorN.setAttribute('data', jugador[0].name);
-            jugadorN.style.backgroundImage = "url('jugadores/"+jugador[0].imagen+"')";
-            
-            //asigno el numero al objeto gol
-            document.getElementById(posicionJugador+"-gol").setAttribute('dataid', jugador[0].numero);
-            //asigno el numero al objeto cambio
-            document.getElementById(posicionJugador+"-cambio").setAttribute('dataid', jugador[0].numero);
-
-            cambioJugadores(jugadorSale, jugadorEntra);
-            */
         }
 
         // ###############################################################
@@ -285,10 +319,39 @@
     });
 
 
+    // #####################################################
+
+    let btnPartido = document.getElementById('btnPartido');
+    btnPartido.addEventListener('click', function() {
+        //console.log('btnPartido');
+        listJugadores.style.display = "none";
+        partido.style.display = "block";
+        listGoles.style.display = "none";
+    });
+
+    let btnListGoles = document.getElementById('btnListGoles');
+    btnListGoles.addEventListener('click', function() {
+        //console.log('btnListGoles');
+        listJugadores.style.display = "none";
+        partido.style.display = "none";
+        listGoles.style.display = "block";
+
+        listGoles.innerHTML = "";
+
+        for (let i = 0; i < logGoles.length; i++) {
+            // ✅ Create element
+            const el = document.createElement('div');
+            // ✅ Set Attributes on Element
+            el.setAttribute('class', 'suplente nombre');
+            el.setAttribute('dataid', logGoles[i].numero);
+            el.setAttribute('data', logGoles[i].name);
+            el.style.backgroundImage = "url('jugadores/"+logGoles[i].imagen+"')";
+            // ✅ add element to DOM
+            listGoles.appendChild(el);
+        }
+
+    });
 
 
-
-    // Get the modal
-    var modal = document.getElementById("myModal");
 </script>
 </html>
