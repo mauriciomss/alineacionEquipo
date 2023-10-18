@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Equipo</title>
-	<link rel="shortcut icon" href="#">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Equipo</title>
+    <link rel="shortcut icon" href="#">
     <link href="assets/style.css" rel="stylesheet">
 
     <script language="JavaScript">
@@ -55,47 +55,48 @@
 <body>
 
     <div class="cuerpo">   
-    	<div class="cronometro">
+        <div class="cronometro">
            <div id="hms"></div>
            <div class="boton start"></div>        
            <div class="boton stop"></div>
            <div class="boton reiniciar"></div>
        </div>
 
-    	<div class="campo">
-    		
-    		<div id="golesMFA" class="golesMFA">00</div>
+        <div class="campo">
+            
+            <div id="golesMFA" class="golesMFA">00</div>
             <div id="golesOtros" class="golesOtros">00</div>
+            <div id="tiempo" class="tiempo">1</div>
 
-            <div class="jugador1 nombre" data=""></div>
-            <div class="jugador1-gol gol" data=""></div>
-            <div class="jugador1-cambio cambio" data=""></div>
+            <div class="jugador1 nombre"  id="jugador1" data="" dataid=""></div>
+            <div class="jugador1-gol gol" id="jugador1-gol" dataid=""></div>
+            <div class="jugador1-cambio cambio" id="jugador1-cambio" dataid=""></div>
 
-            <div class="jugador2 nombre" data=""></div>
-            <div class="jugador2-gol gol" data=""></div>
-            <div class="jugador2-cambio cambio" data=""></div>
+            <div class="jugador2 nombre"  id="jugador2" data="" dataid=""></div>
+            <div class="jugador2-gol gol" id="jugador2-gol" dataid=""></div>
+            <div class="jugador2-cambio cambio" id="jugador2-cambio" dataid=""></div>
+            
+            <div class="jugador3 nombre"  id="jugador3" data="" dataid=""></div>
+            <div class="jugador3-gol gol" id="jugador3-gol" dataid=""></div>
+            <div class="jugador3-cambio cambio" id="jugador3-cambio" dataid=""></div>
 
-    		<div class="jugador3 nombre" data=""></div>
-            <div class="jugador3-gol gol" data=""></div>
-            <div class="jugador3-cambio cambio" data=""></div>		
+            <div class="jugador4 nombre"  id="jugador4" data="" dataid=""></div>
+            <div class="jugador4-gol gol" id="jugador4-gol" dataid=""></div>
+            <div class="jugador4-cambio cambio" id="jugador4-cambio" dataid=""></div>
 
-            <div class="jugador4 nombre" data=""></div>
-            <div class="jugador4-gol gol" data=""></div>
-            <div class="jugador4-cambio cambio" data=""></div>
+            <div class="jugador5 nombre"  id="jugador5" data="" dataid=""></div>
+            <div class="jugador5-gol gol" id="jugador5-gol" dataid=""></div>
+            <div class="jugador5-cambio cambio" id="jugador5-cambio" dataid=""></div>
 
-    		<div class="jugador5 nombre" data=""></div>
-    		<div class="jugador5-gol gol" data=""></div>
-            <div class="jugador5-cambio cambio" data=""></div>
-
-    		<div id="suplentes" class="suplentes" data="suplentes">
-    		</div>
-    	</div>
+            <div id="suplentes" class="suplentes" data="suplentes">
+            </div>
+        </div>
         <!-- The Modal -->
         <div id="myModal" class="modal">
           <!-- Modal content -->
           <div class="modal-content">
             <span class="close">&times;</span>
-            <p>Some text in the Modal..</p>
+            <form><select id="mySelect"  onChange="cambioJugadores(this.options[this.selectedIndex].value)"></select></form>
           </div>
 
         </div>        
@@ -104,18 +105,19 @@
 
 <script type="text/javascript">
     const Jugadores = [
-        {name: "Carmen",numero: "1"},
-        {name: "Laura",numero: "2"},
-        {name: "Zio",numero: "3"},
-        {name: "Manu",numero: "4"},
-        {name: "Ani",numero: "6"},
-        {name: "Sandra",numero: "7"},
-        {name: "Pame",numero: "8"},
-        {name: "Ale",numero: "10"},
-        {name: "Romi",numero: "11"},
-        {name: "Ester",numero: "13"},
-        {name: "Roxana",numero: "14"},
-        {name: "Luz",numero: "15"},
+        {name: "Carmen",numero: "12",imagen: "carmen.jpg"},
+        {name: "Laura",numero: "2",imagen: "laura.jpg"},
+        {name: "Zio",numero: "3",imagen: "zio.jpg"},
+        {name: "Manu",numero: "9",imagen: "manu.jpg"},
+        {name: "Ani",numero: "6",imagen: "ani.jpg"},
+        {name: "Sandra",numero: "7",imagen: "sandra.jpg"},
+        {name: "Pame",numero: "11",imagen: "pame.jpg"},
+        {name: "Ale",numero: "10",imagen: "ale.jpg"},
+        {name: "Romi",numero: "5",imagen: "romi.jpg"},
+        {name: "Ester",numero: "13",imagen: "ester.jpg"},
+        {name: "Roxana",numero: "14",imagen: "roxana.jpg"},
+        {name: "Luz",numero: "15",imagen: "luz.jpg"},
+        {name: "Noe",numero: "8",imagen: "noe.jpg"},
     ];
     //for (let i = 0; i < Jugadores.length; i++) { console.log(Jugadores[i].name); }
     //console.log(Jugadores);
@@ -126,116 +128,167 @@
     const logCambios = [];
     const logGoles = [];
 
-    //const ulTitulares = document.getElementById('titulares');
-    const divSuplentes = document.getElementById('suplentes');
+    let posicionJugador = "";
 
-//var div1 = document.getElementsByClassName("div1");
+    const divSuplentes = document.getElementById('suplentes');
 
     // Al iniciar todos son suplentes
     for (let i = 0; i < Jugadores.length; i++) {
-        suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero } );
-        //    
-        /*
-        ulSuplentes.append(
-            Object.assign(document.createElement('li'), 
-            { textContent: Jugadores[i].name, id: Jugadores[i].numero })
-        );
-        */
+        suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero, imagen: Jugadores[i].imagen } );
+    }
 
-        //document.body.innerHTML += "<div class='suplente nombre' data='Laura'></div>"
-        //document.getElementsByClassName("div2")[0].appendChild(div1[0]);
+    recargarSuplentes();
 
+    function recargarSuplentes() {
+        divSuplentes.innerHTML = "";
+        for (let i = 0; i < suplentes.length; i++) {
+            // ✅ Create element
+            const el = document.createElement('div');
+            // ✅ Set Attributes on Element
+            el.setAttribute('class', 'suplente nombre');
+            el.setAttribute('dataid', suplentes[i].numero);
+            el.setAttribute('data', suplentes[i].name);
+            el.style.backgroundImage = "url('jugadores/"+suplentes[i].imagen+"')";
+            // ✅ add element to DOM
+            divSuplentes.appendChild(el);
+            //
+            // Carga select de cambio
+            var x = document.getElementById("mySelect");
+            var option = document.createElement("option");
+            option.setAttribute('value', suplentes[i].numero);
+            option.text = suplentes[i].name;
+            x.add(option);
+        }
+    }
 
-        var newDiv = document.createElement("div");
-        newDiv.data = "span";
-        newDiv.class = "span";
+    function cambioJugadoresArray(sale, entra){
 
-        //var respuesta = document.getElementById("respuestas");
-        //divSuplentes.appendChild(newDiv);
+        //saco de titulares 
+        const idxObjT = titulares.findIndex(object => {
+            if (object.numero == sale)
+                return object.numero;
+        });
+        titulares.splice(idxObjT, 1);
 
+        //saco de suplentes     
+        const idxObjS = suplentes.findIndex(object => {
+            if (object.numero == entra)
+                return object.numero;
+        });
+        suplentes.splice(idxObjS, 1);
 
-        //divSuplentes.innerHTML = '<div id="div1"><h1>Titulo</h1><p>Texto</p></div>';
+        let tiempo = document.getElementById("tiempo").innerHTML;
+        let hms = document.getElementById("hms").innerHTML;
+   
+        // Agrego el jugador a titulares
+        for (let i = 0; i < Jugadores.length; i++) {
+            if (sale == Jugadores[i].numero) {
+                suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero } );
+                //log
+                // registro cambio y tiempo
+                logCambios.push( { tipo: "s", name: Jugadores[i].name, numero: Jugadores[i].numero, tiempo: tiempo, hms: hms } );
+            }
+            if (entra == Jugadores[i].numero) {
+                titulares.push( { name: Jugadores[i].name, numero: Jugadores[i].numero } );
+                //log
+                // registro cambio y tiempo
+                logCambios.push( { tipo: "e", name: Jugadores[i].name, numero: Jugadores[i].numero, tiempo: tiempo, hms: hms } );
+            }
+        }
 
-        divSuplentes.appendChild( '<div id="div1"><h1>Titulo</h1><p>Texto</p></div>' );
+        recargarSuplentes();
 
-        //document.getElementById('span').innerHTML = 'El registre ha sido borrado.';
-
+        console.log(titulares);
+        console.log(suplentes);
+        console.log(logCambios);
+        //localStorage.setItem('datos', JSON.stringify(logCambios));
+    }
+    
+    function cambioJugadores(chosen) {
+        console.log(chosen);
+        console.log(posicionJugador);
     }
 
 
-
-
-
-
-let golesOtros = document.getElementById('golesOtros');
-parent.addEventListener('dblclick', function() {
-    //console.log('Doble Click');
-    var el = document.getElementById("golesOtros");
-    let goles = parseInt( el.innerHTML );
-    el.innerHTML = goles + 1;
-});
-
-document.addEventListener('click', function handleClick(event) {
-    //console.log('user clicked: ', event.target);
-
-    // ###############################################################
-    if (event.target.classList[1] === 'gol') {
-        //console.log( event.target.attributes.data.value );
-        //modal.style.display = "block";
-        //console.log("gol de " + event.target.attributes.data.value);
-
-        var el = document.getElementById("golesMFA");
+    let golesOtros = document.getElementById('golesOtros');
+    golesOtros.addEventListener('dblclick', function() {
+        //console.log('Doble Click');
+        var el = document.getElementById("golesOtros");
         let goles = parseInt( el.innerHTML );
         el.innerHTML = goles + 1;
-        //console.log( goles +1 );
-    }
+    });
 
-    // ###############################################################
-    if (event.target.classList[1] === 'cambio') {
-        console.log( event.target.attributes.data.value );
-        modal.style.display = "block";
-    }
+    document.addEventListener('click', function handleClick(event) {
+        //console.log('user clicked: ', event.target);
 
-    // ###############################################################
-    if (event.target.className === 'close') {
-        modal.style.display = "none";
-    }
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+        // ###############################################################
+        if (event.target.classList[1] === 'gol') {
+            const jugador = Jugadores.filter(function(o) { return o.numero == 10 });
 
-});
+            var golesMFA = document.getElementById("golesMFA");
+            let goles = parseInt( golesMFA.innerHTML ) + 1;
+            golesMFA.innerHTML = goles;
+
+            let tiempo = document.getElementById("tiempo").innerHTML;
+            let hms = document.getElementById("hms").innerHTML;
+
+            logGoles.push( { name: jugador[0].name, numero: jugador[0].numero, imagen: jugador[0].imagen, goln: goles, tiempo: tiempo, hms: hms } );
+
+            console.log(logGoles);
+        }
+
+        // ###############################################################
+        if (event.target.classList[1] === 'cambio') {
+            //console.log( event.target.attributes.dataid.value );
+            
+            //obtengo posicion en la cancha seleccionada "Ej: jugador1"
+            posicionJugador = event.target.id.replace("-cambio","");
+
+            modal.style.display = "block";
+
+            /*
+            //objeto jugador
+            const jugadorN = document.getElementById(posicionJugador);
+            
+            let jugadorSale = jugadorN.getAttribute("dataid");
+
+            if ( jugadorSale ) {
+                console.log( jugadorSale );
+
+            }
+
+            //busco jugador entra
+            let jugadorEntra = 10;
+            const jugador = Jugadores.filter(function(o) { return o.numero == jugadorEntra });
+            //asigna al objeto los datos del q entra
+            jugadorN.setAttribute('dataid', jugador[0].numero);
+            jugadorN.setAttribute('data', jugador[0].name);
+            jugadorN.style.backgroundImage = "url('jugadores/"+jugador[0].imagen+"')";
+            
+            //asigno el numero al objeto gol
+            document.getElementById(posicionJugador+"-gol").setAttribute('dataid', jugador[0].numero);
+            //asigno el numero al objeto cambio
+            document.getElementById(posicionJugador+"-cambio").setAttribute('dataid', jugador[0].numero);
+
+            cambioJugadores(jugadorSale, jugadorEntra);
+            */
+        }
+
+        // ###############################################################
+        if (event.target.className === 'close') {
+            modal.style.display = "none";
+        }
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+
+    });
 
 
 
 
 
-// Get the modal
-var modal = document.getElementById("myModal");
-
-/*
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-*/
+    // Get the modal
+    var modal = document.getElementById("myModal");
 </script>
 </html>
