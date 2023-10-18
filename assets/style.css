@@ -75,6 +75,16 @@
         font-size: 40px;
         text-align: center;
     }
+        .logoMFA {
+            position: absolute;
+            width: 45px;
+            height: 60px;
+            top: 1%;
+            left: 21%;
+            background-image: url(images/lofoFMA.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
 
     .golesOtros {
         position: absolute;
@@ -345,3 +355,58 @@
         top: 20px;
         padding-bottom: 20px;
     }
+
+    #listGoles {
+        display: none;
+        width: 360px;
+        min-height: 700px;
+        position: relative;
+        border: 4px solid #FF0080;
+        margin-top: 2%;
+        padding: 7px;
+    }
+        #listGoles:before { 
+            content: attr(data); 
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #FF0080;
+            color: #ffffff;
+            padding: 0px 10px; 
+            margin: 0;
+        }
+
+        .logoMFA2 {
+            position: absolute;
+            width: 45px;
+            height: 60px;
+            top: 1%;
+            left: 21%;
+            background-image: url(images/lofoFMA.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+
+        #listJugadoresGoles {
+            margin-top: 15%;
+        }
+
+        .divListGoles {
+            width: 100%;
+            height: 75px;
+            position: relative;
+        }
+        .divListGoles span {
+            margin-left: 25%;
+            font-size: 20px;
+            color: #fff;        
+            font-weight: bold;
+        }
+        .vertical-center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }

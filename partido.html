@@ -16,7 +16,8 @@
             h = 0;
             m = 0;
             s = 0;
-            document.getElementById("hms").innerHTML="00:00:00";
+            //document.getElementById("hms").innerHTML="00:00:00";
+            document.getElementById("hms").innerHTML="00:00";
 
             // ***************************************************
         }
@@ -37,7 +38,8 @@
            if (m<10){mAux="0"+m;}else{mAux=m;}
            if (h<10){hAux="0"+h;}else{hAux=h;}
 
-           document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux; 
+           //document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux; 
+           document.getElementById("hms").innerHTML = mAux + ":" + sAux; 
         }
         function parar(){
            clearInterval(id);
@@ -45,7 +47,8 @@
         }
         function reiniciar(){
            clearInterval(id);
-           document.getElementById("hms").innerHTML="00:00:00";
+           //document.getElementById("hms").innerHTML="00:00:00";
+          document.getElementById("hms").innerHTML="00:00"; 
            h=0;m=0;s=0;
            document.querySelector(".start").addEventListener("click",cronometrar);
         }
@@ -65,6 +68,7 @@
         <div class="campo">
             
             <div id="golesMFA" class="golesMFA">00</div>
+            <div class="logoMFA"></div>
             <div id="golesOtros" class="golesOtros">00</div>
             <div id="tiempo" class="tiempo">1</div>
 
@@ -105,7 +109,12 @@
     <div id="listJugadores">
     </div>
 
-    <div id="listGoles"></div>
+    <div id="listGoles" data="Resultado">
+        <div id="golesMFA2" class="golesMFA">00</div>
+        <div class="logoMFA2"></div>
+        <div id="golesOtros2" class="golesOtros">00</div>
+        <div id="listJugadoresGoles"></div>
+    </div>
 
     <div class="botones">
         <button id="btnListJugadores">COMBOCADOS</button>
@@ -119,8 +128,9 @@
 
     // Vistas
     const listJugadores = document.getElementById("listJugadores");
-    const listGoles = document.getElementById("listGoles"); 
-    const partido = document.getElementById("partido"); 
+    const listGoles = document.getElementById("listGoles");
+    const listJugadoresGoles = document.getElementById("listJugadoresGoles");
+    const partido = document.getElementById("partido");
 
     const Jugadores = [
         {name: "Carmen",numero: "12",imagen: "carmen.jpg"},
@@ -139,7 +149,6 @@
     ];
     //for (let i = 0; i < Jugadores.length; i++) { console.log(Jugadores[i].name); }
     //console.log(Jugadores);
-        
 
     const titulares = [];
     const suplentes = [];
@@ -274,9 +283,11 @@
     let golesOtros = document.getElementById('golesOtros');
     golesOtros.addEventListener('dblclick', function() {
         //console.log('Doble Click');
-        var el = document.getElementById("golesOtros");
-        let goles = parseInt( el.innerHTML );
-        el.innerHTML = goles + 1;
+        const el = document.getElementById("golesOtros");
+        let goles = parseInt( el.innerHTML ) + 1;
+        el.innerHTML = goles;
+        //
+        document.getElementById("golesOtros2").innerHTML = goles
     });
 
     document.addEventListener('click', function handleClick(event) {
@@ -289,6 +300,8 @@
             var golesMFA = document.getElementById("golesMFA");
             let goles = parseInt( golesMFA.innerHTML ) + 1;
             golesMFA.innerHTML = goles;
+            //
+            document.getElementById("golesMFA2").innerHTML = goles
 
             let tiempo = document.getElementById("tiempo").innerHTML;
             let hms = document.getElementById("hms").innerHTML;
@@ -336,18 +349,36 @@
         partido.style.display = "none";
         listGoles.style.display = "block";
 
-        listGoles.innerHTML = "";
+        listJugadoresGoles.innerHTML = "";
 
         for (let i = 0; i < logGoles.length; i++) {
+            
+            // ✅ Create element
+            const div = document.createElement('div');
+            div.setAttribute('class', 'divListGoles');
+            //div.innerHTML = "This is a paragraph.";
+            //listJugadoresGoles.appendChild(div);
+
+            
             // ✅ Create element
             const el = document.createElement('div');
             // ✅ Set Attributes on Element
-            el.setAttribute('class', 'suplente nombre');
-            el.setAttribute('dataid', logGoles[i].numero);
-            el.setAttribute('data', logGoles[i].name);
+            el.setAttribute('class', 'suplente nombre vertical-center');
+            //el.setAttribute('dataid', logGoles[i].numero);
+            //el.setAttribute('data', logGoles[i].name );
             el.style.backgroundImage = "url('jugadores/"+logGoles[i].imagen+"')";
+            el.style.marginLeft = "5%";
             // ✅ add element to DOM
-            listGoles.appendChild(el);
+            div.appendChild(el);
+
+            const div2 = document.createElement('span');
+            div2.setAttribute('class', 'vertical-center');
+            div2.innerHTML = logGoles[i].hms + "' " + logGoles[i].name;
+
+            div.appendChild(div2);
+            
+            listJugadoresGoles.appendChild(div);
+            
         }
 
     });
