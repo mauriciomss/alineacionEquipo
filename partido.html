@@ -70,6 +70,7 @@
             <div id="golesMFA" class="golesMFA">00</div>
             <div class="logoMFA"></div>
             <div id="golesOtros" class="golesOtros">00</div>
+            <div class="logoOtros"></div>
             <div id="tiempo" class="tiempo">1</div>
 
             <div class="jugador1 nombre"  id="jugador1" data="" dataid=""></div>
@@ -113,6 +114,7 @@
         <div id="golesMFA2" class="golesMFA">00</div>
         <div class="logoMFA2"></div>
         <div id="golesOtros2" class="golesOtros">00</div>
+        <div class="logoOtros2"></div>
         <div id="listJugadoresGoles"></div>
     </div>
 
@@ -295,20 +297,25 @@
 
         // ###############################################################
         if (event.target.classList[1] === 'gol') {
-            const jugador = Jugadores.filter(function(o) { return o.numero == 10 });
+            
+            let jugadorId = event.target.attributes.dataid.value;
 
-            var golesMFA = document.getElementById("golesMFA");
-            let goles = parseInt( golesMFA.innerHTML ) + 1;
-            golesMFA.innerHTML = goles;
-            //
-            document.getElementById("golesMFA2").innerHTML = goles
+            if (jugadorId) {        
+                const jugador = Jugadores.filter(function(o) { return o.numero == jugadorId });
 
-            let tiempo = document.getElementById("tiempo").innerHTML;
-            let hms = document.getElementById("hms").innerHTML;
+                var golesMFA = document.getElementById("golesMFA");
+                let goles = parseInt( golesMFA.innerHTML ) + 1;
+                golesMFA.innerHTML = goles;
+                //
+                document.getElementById("golesMFA2").innerHTML = goles
 
-            logGoles.push( { name: jugador[0].name, numero: jugador[0].numero, imagen: jugador[0].imagen, goln: goles, tiempo: tiempo, hms: hms } );
+                let tiempo = document.getElementById("tiempo").innerHTML;
+                let hms = document.getElementById("hms").innerHTML;
 
-            console.log(logGoles);
+                logGoles.push( { name: jugador[0].name, numero: jugador[0].numero, imagen: jugador[0].imagen, goln: goles, tiempo: tiempo, hms: hms } );
+
+                console.log(logGoles);
+            }
         }
 
         // ###############################################################

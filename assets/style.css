@@ -85,7 +85,16 @@
             background-size: 100%;
             background-repeat: no-repeat;
         }
-
+        .logoOtros {
+            position: absolute;
+            width: 45px;
+            height: 60px;
+            top: 1%;
+            left: 67%;
+            background-image: url(images/escudo.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
     .golesOtros {
         position: absolute;
         border: 5px solid #000;
@@ -384,6 +393,16 @@
             top: 1%;
             left: 21%;
             background-image: url(images/lofoFMA.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+        .logoOtros2 {
+            position: absolute;
+            width: 45px;
+            height: 60px;
+            top: 1%;
+            left: 67%;
+            background-image: url(images/escudo.png);
             background-size: 100%;
             background-repeat: no-repeat;
         }
