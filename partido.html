@@ -58,7 +58,7 @@
 <body>
 
     <div id="partido" class="cuerpo">   
-        <div class="cronometro">
+        <div class="cronometro soloPartido">
            <div id="hms"></div>
            <div class="boton start"></div>        
            <div class="boton stop"></div>
@@ -67,31 +67,31 @@
 
         <div class="campo">
             
-            <div id="golesMFA" class="golesMFA">00</div>
+            <div id="golesMFA" class="golesMFA soloPartido">00</div>
             <div class="logoMFA"></div>
-            <div id="golesOtros" class="golesOtros">00</div>
+            <div id="golesOtros" class="golesOtros soloPartido">00</div>
             <div class="logoOtros"></div>
-            <div id="tiempo" class="tiempo">1</div>
+            <div id="tiempo" class="tiempo soloPartido">1</div>
 
             <div class="jugador1 nombre"  id="jugador1" data="" dataid=""></div>
-            <div class="jugador1-gol gol" id="jugador1-gol" dataid=""></div>
-            <div class="jugador1-cambio cambio" id="jugador1-cambio" dataid=""></div>
+            <div class="jugador1-gol gol soloPartido" id="jugador1-gol" dataid=""></div>
+            <div class="jugador1-cambio cambio soloPartido" id="jugador1-cambio" dataid=""></div>
 
             <div class="jugador2 nombre"  id="jugador2" data="" dataid=""></div>
-            <div class="jugador2-gol gol" id="jugador2-gol" dataid=""></div>
-            <div class="jugador2-cambio cambio" id="jugador2-cambio" dataid=""></div>
+            <div class="jugador2-gol gol soloPartido" id="jugador2-gol" dataid=""></div>
+            <div class="jugador2-cambio cambio soloPartido" id="jugador2-cambio" dataid=""></div>
             
             <div class="jugador3 nombre"  id="jugador3" data="" dataid=""></div>
-            <div class="jugador3-gol gol" id="jugador3-gol" dataid=""></div>
-            <div class="jugador3-cambio cambio" id="jugador3-cambio" dataid=""></div>
+            <div class="jugador3-gol gol soloPartido" id="jugador3-gol" dataid=""></div>
+            <div class="jugador3-cambio cambio soloPartido" id="jugador3-cambio" dataid=""></div>
 
             <div class="jugador4 nombre"  id="jugador4" data="" dataid=""></div>
-            <div class="jugador4-gol gol" id="jugador4-gol" dataid=""></div>
-            <div class="jugador4-cambio cambio" id="jugador4-cambio" dataid=""></div>
+            <div class="jugador4-gol gol soloPartido" id="jugador4-gol" dataid=""></div>
+            <div class="jugador4-cambio cambio soloPartido" id="jugador4-cambio" dataid=""></div>
 
             <div class="jugador5 nombre"  id="jugador5" data="" dataid=""></div>
-            <div class="jugador5-gol gol" id="jugador5-gol" dataid=""></div>
-            <div class="jugador5-cambio cambio" id="jugador5-cambio" dataid=""></div>
+            <div class="jugador5-gol gol soloPartido" id="jugador5-gol" dataid=""></div>
+            <div class="jugador5-cambio cambio soloPartido" id="jugador5-cambio" dataid=""></div>
 
             <div id="suplentes" class="suplentes" data="SUPLENTES">
             </div>
@@ -120,6 +120,7 @@
 
     <div class="botones">
         <button id="btnListJugadores">COMBOCADOS</button>
+        <button id="btnEquipo">EQUIPO</button>
         <button id="btnPartido">PARTIDO</button>
         <button id="btnListGoles">GOLES</button>
     </div>
@@ -344,6 +345,11 @@
     let btnPartido = document.getElementById('btnPartido');
     btnPartido.addEventListener('click', function() {
         //console.log('btnPartido');
+        const soloPartido = document.querySelectorAll('.soloPartido');
+        soloPartido.forEach(element => {
+            element.style.display = "block";
+        });
+        //
         listJugadores.style.display = "none";
         partido.style.display = "block";
         listGoles.style.display = "none";
@@ -352,6 +358,11 @@
     let btnListGoles = document.getElementById('btnListGoles');
     btnListGoles.addEventListener('click', function() {
         //console.log('btnListGoles');
+        const soloPartido = document.querySelectorAll('.soloPartido');
+        soloPartido.forEach(element => {
+            element.style.display = "block";
+        });
+        //
         listJugadores.style.display = "none";
         partido.style.display = "none";
         listGoles.style.display = "block";
@@ -370,7 +381,7 @@
             // ✅ Create element
             const el = document.createElement('div');
             // ✅ Set Attributes on Element
-            el.setAttribute('class', 'suplente nombre vertical-center');
+            el.setAttribute('class', 'goleador nombre vertical-center');
             //el.setAttribute('dataid', logGoles[i].numero);
             //el.setAttribute('data', logGoles[i].name );
             el.style.backgroundImage = "url('jugadores/"+logGoles[i].imagen+"')";
@@ -390,6 +401,17 @@
 
     });
 
+    let btnEquipo = document.getElementById('btnEquipo');
+    btnEquipo.addEventListener('click', function() {
+        const soloPartido = document.querySelectorAll('.soloPartido');
+        soloPartido.forEach(element => {
+            element.style.display = "none";
+        });
+        //
+        listJugadores.style.display = "none";
+        partido.style.display = "block";
+        listGoles.style.display = "none";
+    });
 
 </script>
 </html>
