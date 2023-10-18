@@ -283,7 +283,7 @@
     .suplentes {
         position: absolute;
         border: 4px solid #FF0080;
-        top: 55%;
+        top: 65%;
         padding: 7px;
     }
     .suplentes:before { 
@@ -371,7 +371,7 @@
         min-height: 700px;
         position: relative;
         border: 4px solid #FF0080;
-        margin-top: 2%;
+        margin-top: 5%;
         padding: 7px;
     }
         #listGoles:before { 
