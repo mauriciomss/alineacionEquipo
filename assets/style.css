@@ -67,7 +67,7 @@
         position: absolute;
         border: 5px solid #000;
         width: 65px;
-        height: 50px;
+        height: 60px;
         top: 1%;
         left: 3%;
         background-color: #fff;
@@ -99,7 +99,7 @@
         position: absolute;
         border: 5px solid #000;
         width: 65px;
-        height: 50px;
+        height: 60px;
         top: 1%;
         left: 79%;
         background-color: #fff;
@@ -112,8 +112,8 @@
     .jugador1 {
         position: absolute;
         border: 2px solid #FF0080;
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         top: 41%;
         left: 43%;
@@ -144,8 +144,8 @@
     .jugador2 {
         position: absolute;
         border: 2px solid #FF0080;
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         top: 31%;
         left: 43%;
@@ -176,8 +176,8 @@
     .jugador3 {
         position: absolute;
         border: 2px solid #FF0080;
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         top: 24%;
         left: 12%;
@@ -208,8 +208,8 @@
     .jugador4 {
         position: absolute;
         border: 2px solid #FF0080;
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         top: 24%;
         left: 71%;
@@ -240,8 +240,8 @@
     .jugador5 {
         position: absolute;
         border: 2px solid #FF0080;
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         top: 17%;
         left: 43%;
@@ -302,8 +302,8 @@
             display: inline-block;
             position: relative;
             border: 2px solid #FF0080;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background-image: url(images/jugadora.jpg);
             background-size: 100%;
