@@ -31,7 +31,7 @@
     }
 
     .cuerpo {
-        width: 400px;
+        width: 100%;
         position: relative;
     }
 
@@ -283,7 +283,7 @@
     .suplentes {
         position: absolute;
         border: 4px solid #FF0080;
-        top: 52%;
+        top: 55%;
         padding: 7px;
     }
     .suplentes:before { 
@@ -367,7 +367,7 @@
 
     #listGoles {
         display: none;
-        width: 360px;
+        width: 100%;
         min-height: 700px;
         position: relative;
         border: 4px solid #FF0080;
