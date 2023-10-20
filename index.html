@@ -8,6 +8,11 @@
     <link href="assets/style.css" rel="stylesheet">
 
     <script language="JavaScript">
+        
+        window.onbeforeunload = function() {
+          return "¿Desea recargar la página web?";
+        };
+
        window.onload = init;
        function init(){
             document.querySelector(".start").addEventListener("click",cronometrar);
