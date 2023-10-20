@@ -447,6 +447,17 @@
             transform: translateY(-50%);
         }
 
+    .logoMFACenter {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        top: -20px;
+        left: 75%;
+        background-image: url(images/lofoFMA.png);
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+
     #listJugadores {
         width: 100%;
         min-height: 680px;
