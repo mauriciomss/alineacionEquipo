@@ -166,26 +166,26 @@
     const modal = document.getElementById("myModal");
 
     const Jugadores = [
-        {name: "Carmen", numero: "12", imagen: "carmen.jpg", combocado: 0},
-        {name: "Laura", numero: "2", imagen: "laura.jpg", combocado: 0},
-        {name: "Zio", numero: "3", imagen: "zio.jpg", combocado: 0},
-        {name: "Manu", numero: "9", imagen: "manu.jpg", combocado: 0},
-        {name: "Ani", numero: "6", imagen: "ani.jpg", combocado: 0},
-        {name: "Sandra", numero: "7", imagen: "sandra.jpg", combocado: 0},
-        {name: "Pame", numero: "11", imagen: "pame.jpg", combocado: 0},
-        {name: "Ale", numero: "10", imagen: "ale.jpg", combocado: 0},
-        {name: "Romi", numero: "5", imagen: "romi.jpg", combocado: 0},
-        {name: "Ester", numero: "13", imagen: "ester.jpg", combocado: 0},
-        {name: "Roxana", numero: "14", imagen: "roxana.jpg", combocado: 0},
-        {name: "Luz", numero: "15", imagen: "luz.jpg", combocado: 0},
-        {name: "Noe", numero: "8", imagen: "noe.jpg", combocado: 0},
-        {name: "Flor", numero: "16", imagen: "flor.jpg", combocado: 0},
+        {name: "Carmen", numero: "12", imagen: "carmen.jpg", posicion: 'arco', combocado: 0},
+        {name: "Laura", numero: "2", imagen: "laura.jpg", posicion: 'lateral', combocado: 0},
+        {name: "Zio", numero: "3", imagen: "zio.jpg", posicion: 'cierre', combocado: 0},
+        {name: "Manu", numero: "9", imagen: "manu.jpg", posicion: 'lateral', combocado: 0},
+        {name: "Ani", numero: "6", imagen: "ani.jpg", posicion: 'lateral', combocado: 0},
+        {name: "Sandra", numero: "7", imagen: "sandra.jpg", posicion: 'lateral', combocado: 0},
+        {name: "Pame", numero: "11", imagen: "pame.jpg", posicion: 'pivot', combocado: 0},
+        {name: "Ale", numero: "10", imagen: "ale.jpg", posicion: 'cierre', combocado: 0},
+        {name: "Romi", numero: "5", imagen: "romi.jpg", posicion: 'arco', combocado: 0},
+        {name: "Ester", numero: "13", imagen: "ester.jpg", posicion: 'cierre', combocado: 0},
+        {name: "Roxana", numero: "14", imagen: "roxana.jpg", posicion: 'lateral', combocado: 0},
+        {name: "Luz", numero: "15", imagen: "luz.jpg", posicion: 'pivot', combocado: 0},
+        {name: "Noe", numero: "8", imagen: "noe.jpg", posicion: 'arco', combocado: 0},
+        {name: "Flor", numero: "16", imagen: "flor.jpg", posicion: 'lateral', combocado: 0},
     ];
     //for (let i = 0; i < Jugadores.length; i++) { console.log(Jugadores[i].name); }
     //console.log(Jugadores);
 
     Jugadores.sort(function (a, b){
-        return ( a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+        return ( a.posicion.toLowerCase().localeCompare(b.posicion.toLowerCase()))
     });
 
     function recargarCombocados() {
@@ -218,7 +218,7 @@
             label.htmlFor = Jugadores[i].numero;
              
             // appending the created text to the created label tag 
-            label.appendChild(document.createTextNode( Jugadores[i].name + " ("+Jugadores[i].numero+")" ));
+            label.appendChild(document.createTextNode( Jugadores[i].name + " #"+Jugadores[i].numero+" ("+Jugadores[i].posicion.toUpperCase()+")"));
              
             // appending the checkbox and label to div
             div.appendChild(checkbox);
@@ -258,7 +258,7 @@
         for (let i = 0; i < Jugadores.length; i++) {
             if ( Jugadores[i].combocado == 1) 
             {
-                suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero, imagen: Jugadores[i].imagen } );
+                suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero, imagen: Jugadores[i].imagen, posicion: Jugadores[i].posicion } );
             }
         }
 
@@ -282,7 +282,7 @@
     function recargarSuplentes() {
         
         suplentes.sort(function (a, b){
-            return ( a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+            return ( a.posicion.toLowerCase().localeCompare(b.posicion.toLowerCase()))
         });
 
         divSuplentes.innerHTML = "";
@@ -335,13 +335,13 @@
         // Agrego el jugador a titulares
         for (let i = 0; i < Jugadores.length; i++) {
             if (sale == Jugadores[i].numero) {
-                suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero, imagen: Jugadores[i].imagen } );
+                suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero, imagen: Jugadores[i].imagen, posicion: Jugadores[i].posicion } );
                 //log
                 // registro cambio y tiempo
                 logCambios.push( { tipo: "s", name: Jugadores[i].name, numero: Jugadores[i].numero, tiempo: tiempo, hms: hms } );
             }
             if (entra == Jugadores[i].numero) {
-                titulares.push( { name: Jugadores[i].name, numero: Jugadores[i].numero, imagen: Jugadores[i].imagen } );
+                titulares.push( { name: Jugadores[i].name, numero: Jugadores[i].numero, imagen: Jugadores[i].imagen, posicion: Jugadores[i].posicion } );
                 //log
                 // registro cambio y tiempo
                 logCambios.push( { tipo: "e", name: Jugadores[i].name, numero: Jugadores[i].numero, tiempo: tiempo, hms: hms } );
