@@ -286,6 +286,7 @@
         top: 58%;
         padding: 8px;
         padding-top: 15px;
+        width: 100%;
     }
     .suplentes:before { 
         content: attr(data); 
@@ -440,4 +441,26 @@
             top: 50%;
             -ms-transform: translateY(-50%);
             transform: translateY(-50%);
+        }
+
+    #config input {
+        padding: 10px;
+    }
+
+    button {
+        padding: 10px;
+    }
+
+    .listaBuenaFeDivs {
+        width: 100%;
+        position: relative;
+        margin-top: 10px;
+        color: #fff; 
+        font-size: 18px;
+        font-weight: bold;
+    }
+        .listaBuenaFeDivs input {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
         }

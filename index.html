@@ -28,18 +28,35 @@
            document.querySelector(".start").removeEventListener("click",cronometrar);
         }
         function escribir(){
-           var hAux, mAux, sAux;
-           s++;
-           if (s>59){m++;s=0;}
-           if (m>59){h++;m=0;}
-           if (h>24){h=0;}
+            var hAux, mAux, sAux;
+            s++;
+            if (s>59){m++;s=0;}
+            if (m>59){h++;m=0;}
+            if (h>24){h=0;}
 
-           if (s<10){sAux="0"+s;}else{sAux=s;}
-           if (m<10){mAux="0"+m;}else{mAux=m;}
-           if (h<10){hAux="0"+h;}else{hAux=h;}
+            if (s<10){sAux="0"+s;}else{sAux=s;}
+            if (m<10){mAux="0"+m;}else{mAux=m;}
+            if (h<10){hAux="0"+h;}else{hAux=h;}
 
-           //document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux; 
-           document.getElementById("hms").innerHTML = mAux + ":" + sAux; 
+            //document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux; 
+            document.getElementById("hms").innerHTML = mAux + ":" + sAux; 
+
+            if (parseInt(mAux) == document.getElementById("time_cambio").value && sAux == "00") {
+                const audio = document.createElement("audio");
+                audio.preload = "auto";
+                audio.src = "assets/cambio.wav";
+                audio.play();
+                document.body.appendChild(audio);
+            }
+
+            if (parseInt(mAux) == document.getElementById("time_fin").value && sAux == "00") {
+                const audio = document.createElement("audio");
+                audio.preload = "auto";
+                audio.src = "assets/fin.wav";
+                audio.play();
+                document.body.appendChild(audio);
+            }
+
         }
         function parar(){
            clearInterval(id);
@@ -57,7 +74,7 @@
 </head>
 <body>
 
-    <div id="partido" class="cuerpo">   
+    <div id="partido" class="cuerpo"  style="display: none;">   
         <div class="cronometro soloPartido">
            <div id="hms"></div>
            <div class="boton start"></div>        
@@ -107,22 +124,32 @@
         </div>        
     </div>
 
-    <div id="listJugadores">
+    <div id="listJugadores" style="margin: 50px;">
+        <div id="listaBuenaFe"></div>
+        <button id="btnCargarCombocados" style="margin-top: 20px;">Cargar</button>
     </div>
 
-    <div id="listGoles" data="Resultado">
+    <div id="listGoles" data="Resultado" style="display: none;">
         <div id="golesMFA2" class="golesMFA">00</div>
         <div class="logoMFA2"></div>
         <div id="golesOtros2" class="golesOtros">00</div>
         <div class="logoOtros2"></div>
         <div id="listJugadoresGoles"></div>
     </div>
+    
+    <div id="config" style="display: none; margin: 50px; color: #fff ;">
+        <h3>Sonidos</h3>
+        Cambio sonar al minuto: <input type="number" name="time_cambio" id="time_cambio" value="5">
+        <br>
+        Cambio sonar al minuto: <input type="number" name="time_fin" id="time_fin" value="20">
+    </div>
 
     <div class="botones">
-        <button id="btnListJugadores">COMBOCADOS</button>
+        <button id="btnListJugadores">PLANTEL</button>
         <button id="btnEquipo">EQUIPO</button>
         <button id="btnPartido">PARTIDO</button>
         <button id="btnListGoles">GOLES</button>
+        <button id="btnConfig">CONFIG</button>
     </div>
 
 </body>
@@ -134,24 +161,115 @@
     const listGoles = document.getElementById("listGoles");
     const listJugadoresGoles = document.getElementById("listJugadoresGoles");
     const partido = document.getElementById("partido");
+    const config = document.getElementById("config");
+    const divSuplentes = document.getElementById('suplentes');
+    const modal = document.getElementById("myModal");
 
     const Jugadores = [
-        {name: "Carmen",numero: "12",imagen: "carmen.jpg"},
-        {name: "Laura",numero: "2",imagen: "laura.jpg"},
-        {name: "Zio",numero: "3",imagen: "zio.jpg"},
-        {name: "Manu",numero: "9",imagen: "manu.jpg"},
-        {name: "Ani",numero: "6",imagen: "ani.jpg"},
-        {name: "Sandra",numero: "7",imagen: "sandra.jpg"},
-        {name: "Pame",numero: "11",imagen: "pame.jpg"},
-        {name: "Ale",numero: "10",imagen: "ale.jpg"},
-        {name: "Romi",numero: "5",imagen: "romi.jpg"},
-        {name: "Ester",numero: "13",imagen: "ester.jpg"},
-        {name: "Roxana",numero: "14",imagen: "roxana.jpg"},
-        {name: "Luz",numero: "15",imagen: "luz.jpg"},
-        {name: "Noe",numero: "8",imagen: "noe.jpg"},
+        {name: "Carmen", numero: "12", imagen: "carmen.jpg", combocado: 0},
+        {name: "Laura", numero: "2", imagen: "laura.jpg", combocado: 0},
+        {name: "Zio", numero: "3", imagen: "zio.jpg", combocado: 0},
+        {name: "Manu", numero: "9", imagen: "manu.jpg", combocado: 0},
+        {name: "Ani", numero: "6", imagen: "ani.jpg", combocado: 0},
+        {name: "Sandra", numero: "7", imagen: "sandra.jpg", combocado: 0},
+        {name: "Pame", numero: "11", imagen: "pame.jpg", combocado: 0},
+        {name: "Ale", numero: "10", imagen: "ale.jpg", combocado: 0},
+        {name: "Romi", numero: "5", imagen: "romi.jpg", combocado: 0},
+        {name: "Ester", numero: "13", imagen: "ester.jpg", combocado: 0},
+        {name: "Roxana", numero: "14", imagen: "roxana.jpg", combocado: 0},
+        {name: "Luz", numero: "15", imagen: "luz.jpg", combocado: 0},
+        {name: "Noe", numero: "8", imagen: "noe.jpg", combocado: 0},
+        {name: "Flor", numero: "16", imagen: "flor.jpg", combocado: 0},
     ];
     //for (let i = 0; i < Jugadores.length; i++) { console.log(Jugadores[i].name); }
     //console.log(Jugadores);
+
+    Jugadores.sort(function (a, b){
+        return ( a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+    });
+
+    function recargarCombocados() {
+        // INICIALIZO 
+        const listaBuenaFe = document.getElementById('listaBuenaFe');
+        listaBuenaFe.innerHTML = "";
+
+        for (let i = 0; i < Jugadores.length; i++) {
+            // Create element
+            const div = document.createElement('div');
+            div.setAttribute('class', 'listaBuenaFeDivs');
+
+            // creating checkbox element
+            var checkbox = document.createElement('input');
+             
+            // Assigning the attributes to created checkbox
+            checkbox.type = "checkbox";
+            checkbox.name = Jugadores[i].numero;
+            checkbox.value = 0;
+            checkbox.id = Jugadores[i].numero;
+            checkbox.className = 'jugador_combocado';
+            if ( Jugadores[i].combocado == 1 ) {
+                checkbox.checked = true;
+            }
+             
+            // creating label for checkbox
+            var label = document.createElement('label');
+             
+            // assigning attributes for the created label tag 
+            label.htmlFor = Jugadores[i].numero;
+             
+            // appending the created text to the created label tag 
+            label.appendChild(document.createTextNode( Jugadores[i].name + " ("+Jugadores[i].numero+")" ));
+             
+            // appending the checkbox and label to div
+            div.appendChild(checkbox);
+            div.appendChild(label);
+
+            listaBuenaFe.appendChild(div);
+        }
+
+        console.log(Jugadores);
+    }
+
+    recargarCombocados();
+
+
+    // ------------------------------------------------------------------------------
+
+
+    let btnListJugadores = document.getElementById('btnListJugadores');
+    btnListJugadores.addEventListener('click', function() {
+
+        console.log(Jugadores);
+
+        //
+        listJugadores.style.display = "block";
+        partido.style.display = "none";
+        listGoles.style.display = "none";
+        config.style.display = "none";
+    });
+
+    // ------------------------------------------------------------------------------
+
+    let btnCargarCombocados = document.getElementById('btnCargarCombocados');
+    btnCargarCombocados.addEventListener('click', function() {
+
+        suplentes.length = 0;
+        // Al iniciar todos son suplentes
+        for (let i = 0; i < Jugadores.length; i++) {
+            if ( Jugadores[i].combocado == 1) 
+            {
+                suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero, imagen: Jugadores[i].imagen } );
+            }
+        }
+
+        recargarSuplentes();
+
+        alert("CARGADO!!!");
+    });
+
+
+    // ##########################################################
+
 
     const titulares = [];
     const suplentes = [];
@@ -160,17 +278,6 @@
 
     let posicionJugador = "";
 
-    const divSuplentes = document.getElementById('suplentes');
-
-    // Get the modal
-    var modal = document.getElementById("myModal");    
-
-    // Al iniciar todos son suplentes
-    for (let i = 0; i < Jugadores.length; i++) {
-        suplentes.push( { name: Jugadores[i].name, numero: Jugadores[i].numero, imagen: Jugadores[i].imagen } );
-    }
-
-    recargarSuplentes();
 
     function recargarSuplentes() {
         
@@ -188,14 +295,14 @@
         x.add(option);
 
         for (let i = 0; i < suplentes.length; i++) {
-            // ✅ Create element
+            // Create element
             const el = document.createElement('div');
-            // ✅ Set Attributes on Element
+            // Set Attributes on Element
             el.setAttribute('class', 'suplente nombre');
             el.setAttribute('dataid', suplentes[i].numero);
             el.setAttribute('data', suplentes[i].name);
             el.style.backgroundImage = "url('jugadores/"+suplentes[i].imagen+"')";
-            // ✅ add element to DOM
+            // add element to DOM
             divSuplentes.appendChild(el);
             //
             // Carga select de cambio
@@ -290,11 +397,33 @@
         let goles = parseInt( el.innerHTML ) + 1;
         el.innerHTML = goles;
         //
-        document.getElementById("golesOtros2").innerHTML = goles
+        document.getElementById("golesOtros2").innerHTML = goles;
     });
 
     document.addEventListener('click', function handleClick(event) {
         //console.log('user clicked: ', event.target);
+
+        // ###############################################################
+        if (event.target.classList[0] === 'jugador_combocado') {
+
+            let jugadorId = event.target.attributes.id.value;
+
+            if (jugadorId) {
+                let ck = 0;
+
+                if (document.getElementById(jugadorId).checked)
+                    ck = 1;            
+
+                //console.log(jugadorId+' esta seleccionado');
+                const jugador = Jugadores.filter(function(o) { 
+                    if ( o.numero == jugadorId ) {
+                        o.combocado = ck;
+                    }
+                    return true;
+                });
+            }
+
+        }
 
         // ###############################################################
         if (event.target.classList[1] === 'gol') {
@@ -353,6 +482,7 @@
         listJugadores.style.display = "none";
         partido.style.display = "block";
         listGoles.style.display = "none";
+        config.style.display = "none";
     });
 
     let btnListGoles = document.getElementById('btnListGoles');
@@ -366,27 +496,28 @@
         listJugadores.style.display = "none";
         partido.style.display = "none";
         listGoles.style.display = "block";
+        config.style.display = "none";
 
         listJugadoresGoles.innerHTML = "";
 
         for (let i = 0; i < logGoles.length; i++) {
             
-            // ✅ Create element
+            // Create element
             const div = document.createElement('div');
             div.setAttribute('class', 'divListGoles');
             //div.innerHTML = "This is a paragraph.";
             //listJugadoresGoles.appendChild(div);
 
             
-            // ✅ Create element
+            // Create element
             const el = document.createElement('div');
-            // ✅ Set Attributes on Element
+            // Set Attributes on Element
             el.setAttribute('class', 'goleador nombre vertical-center');
             //el.setAttribute('dataid', logGoles[i].numero);
             //el.setAttribute('data', logGoles[i].name );
             el.style.backgroundImage = "url('jugadores/"+logGoles[i].imagen+"')";
             el.style.marginLeft = "5%";
-            // ✅ add element to DOM
+            // add element to DOM
             div.appendChild(el);
 
             const div2 = document.createElement('span');
@@ -411,7 +542,17 @@
         listJugadores.style.display = "none";
         partido.style.display = "block";
         listGoles.style.display = "none";
+        config.style.display = "none";
     });
+
+    let btnConfig = document.getElementById('btnConfig');
+    btnConfig.addEventListener('click', function() {
+        listJugadores.style.display = "none";
+        partido.style.display = "none";
+        listGoles.style.display = "none";
+        config.style.display = "block";
+    });
+
 
 </script>
 </html>
